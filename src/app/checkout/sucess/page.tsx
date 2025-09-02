@@ -26,10 +26,10 @@ const CheckoutSuccessPage = () => {
             height={300}
             className="mx-auto"
           />
-          <DialogTitle className="mt-4 text-2xl">Pedido efetuado!</DialogTitle>
+          <DialogTitle className="mt-4 text-2xl">Pedido enviado!</DialogTitle>
           <DialogDescription className="font-medium">
-            Seu pedido foi efetuado com sucesso. Você pode acompanhar o status
-            na seção de “Meus Pedidos”.
+            Seu pedido foi enviado para o WhatsApp com sucesso. Aguarde nossa
+            confirmação e acompanhe o status na seção de Meus Pedidos.
           </DialogDescription>
 
           <DialogFooter>
