@@ -35,7 +35,11 @@ const Home = async () => {
 
         <BrandList title="Marcas parceiras" />
 
-        <ProductList products={products} title="Mais vendidos" />
+        <ProductList
+          products={products}
+          title="Mais vendidos"
+          viewAllLink="/products/best-sellers"
+        />
 
         <div className="px-5">
           <CategorySelector categories={categories} />
@@ -51,7 +55,11 @@ const Home = async () => {
             className="h-auto w-full"
           />
         </div>
-        <ProductList products={newlyCreatedProducts} title="Novos produtos" />
+        <ProductList
+          products={newlyCreatedProducts}
+          title="Novos produtos"
+          viewAllLink="/products/new-products"
+        />
         <Footer />
       </div>
     </>
