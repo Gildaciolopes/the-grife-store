@@ -1,7 +1,15 @@
 import crypto from "crypto";
 
 import { db } from ".";
-import { categoryTable, productTable, productVariantTable } from "./schema";
+import {
+  cartItemTable,
+  cartTable,
+  categoryTable,
+  orderItemTable,
+  orderTable,
+  productTable,
+  productVariantTable,
+} from "./schema";
 
 const productImages = {
   Mochila: {
@@ -542,9 +550,20 @@ async function main() {
   try {
     // Limpar dados existentes
     console.log("🧹 Limpando dados existentes...");
-    await db.delete(productVariantTable);
-    await db.delete(productTable);
-    await db.delete(categoryTable);
+    await db.transaction(async (tx) => {
+      // primeiro apagar itens que dependem de product_variant
+      await tx.delete(orderItemTable);
+      await tx.delete(cartItemTable);
+
+      // depois pedidos e carrinhos (que referenciam usuários / endereços)
+      await tx.delete(orderTable);
+      await tx.delete(cartTable);
+
+      // agora apaga as tabelas pai na ordem correta
+      await tx.delete(productVariantTable);
+      await tx.delete(productTable);
+      await tx.delete(categoryTable);
+    });
     console.log("✅ Dados limpos com sucesso!");
 
     // Inserir categorias primeiro
