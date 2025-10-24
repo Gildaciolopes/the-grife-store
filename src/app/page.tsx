@@ -30,7 +30,7 @@ const Home = async () => {
               height={0}
               width={0}
               sizes="100vw"
-              className="h-auto w-full md:hidden"
+              className="h-auto w-full px-4 md:hidden"
             />
             <Image
               src="/bannerWithStyle.svg"
@@ -112,7 +112,7 @@ const Home = async () => {
         <div className="mx-auto max-w-screen-xl px-5 md:hidden md:px-5 lg:px-8">
           <div className="relative">
             <Image
-              src="/beAuthentic.svg"
+              src="/BeAuthentic.svg"
               alt="Seja autentico"
               height={0}
               width={0}
