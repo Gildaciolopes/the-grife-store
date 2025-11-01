@@ -29,6 +29,7 @@ import { Cart } from "./cart";
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = authClient.useSession();
+  const firstName = session?.user?.name?.split(" ")?.[0] ?? session?.user?.name;
   const categoriesLinks = [
     { name: "Camisetas", slug: "camisetas" },
     { name: "Bermudas & Shorts", slug: "bermudas" },
@@ -38,12 +39,31 @@ export const Header = () => {
     { name: "Acessórios", slug: "acessrios" },
   ] as const;
   return (
-    <header className="flex items-center justify-between p-5">
-      <Link href="/">
+    <header className="mx-auto flex max-w-360 items-center justify-between p-5 md:grid md:grid-cols-3 md:items-center md:border-b md:border-gray-200 md:pb-3">
+      {/* saudação na esquerda */}
+      <div className="hidden items-center md:flex">
+        {session?.user ? (
+          <button
+            onClick={() => window.dispatchEvent(new Event("cart:open"))}
+            className="font-medium hover:cursor-pointer hover:underline"
+          >
+            Olá, {firstName}!
+          </button>
+        ) : (
+          <Link
+            href="/authentication"
+            className="font-medium hover:cursor-pointer hover:underline"
+          >
+            Olá. Faça seu login!
+          </Link>
+        )}
+      </div>
+
+      <Link href="/" className="md:justify-self-center">
         <Image src="/Logo.svg" alt="The Grife" width={80} height={25} />
       </Link>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 md:justify-self-end">
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
@@ -150,6 +170,21 @@ export const Header = () => {
           </SheetContent>
         </Sheet>
         <Cart />
+      </div>
+
+      {/* ações rápidas */}
+      <div className="hidden md:col-span-3 md:mt-3 md:flex md:justify-center">
+        <nav className="flex items-center gap-8 text-sm">
+          {categoriesLinks.map((link) => (
+            <Link
+              key={link.slug}
+              href={`/category/${link.slug}`}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </nav>
       </div>
     </header>
   );

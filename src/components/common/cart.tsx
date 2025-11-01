@@ -119,3 +119,5 @@ export const Cart = () => {
     </Sheet>
   );
 };
+
+export default Cart;
